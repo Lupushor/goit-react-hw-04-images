@@ -24,7 +24,7 @@ export const App = () => {
       setImages(prevImages => [...prevImages, ...data.hits]);
       setTotal(data.totalHits);
     } catch (error) {
-      setError({ error });
+      setError(error);
     } finally {
       setIsLoading(false);
     }
@@ -34,22 +34,24 @@ export const App = () => {
     fetchImages(query, page);
   }, [query, page]);
 
-  const onHandelSubmit = ({ query }) => {
+  const handelSubmit = query => {
     setQuery(query);
     setImages([]);
     setPage(1);
   };
 
   const onLoadMore = () => {
-    setPage(prev => prev.page + 1);
+    setPage(prevState => prevState + 1);
   };
 
   const totalPage = total / images.length;
 
   return (
     <Layer>
-      <Searchbar onSubmit={onHandelSubmit} />
+      <Searchbar onSubmit={handelSubmit} />
       {images.length !== 0 && <ImageGallery images={images} />}
+
+      {error && <div>Error: {error.message}</div>}
 
       <LoaderStyle>
         {isLoading && images.length === 0 && (
