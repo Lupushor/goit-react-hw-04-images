@@ -1,47 +1,41 @@
 import { ModalImg } from 'components/modal/Modal';
-import { Component } from 'react';
-import PropTypes from 'prop-types';
+import { useState } from 'react';
+// import PropTypes from 'prop-types';
 import {
   ImageGalleryItemImage,
   ImageGalleryItemList,
 } from './ImageGalleryItem.styled';
 
-export class ImageGalleryItem extends Component {
-  state = {
-    selectedImg: null,
+export const ImageGalleryItem = ({ largeImageURL, tags, webformatURL }) => {
+  const [selectedImg, setSelectedImg] = useState(null);
+
+  const openModal = () => {
+    setSelectedImg(largeImageURL);
+  };
+  const closeModal = () => {
+    setSelectedImg(null);
   };
 
-  setSelectedImg = () => {
-    this.setState({ selectedImg: this.props.largeImageURL });
-  };
+  return (
+    <ImageGalleryItemList>
+      <ImageGalleryItemImage
+        src={webformatURL}
+        alt={tags}
+        onClick={openModal}
+      />
 
-  closeModal = () => {
-    this.setState({ selectedImg: null });
-  };
-
-  render() {
-    const { selectedImg } = this.state;
-    const { largeImageURL, tags, webformatURL } = this.props;
-    return (
-      <ImageGalleryItemList class="gallery-item">
-        <ImageGalleryItemImage
-          src={webformatURL}
-          alt={tags}
-          onClick={this.setSelectedImg}
-        />
-        <ModalImg
-          isOpen={selectedImg !== null}
-          onClose={this.closeModal}
-          largeImageURL={largeImageURL}
-          tags={tags}
-        />
-      </ImageGalleryItemList>
-    );
-  }
-}
-
-ImageGalleryItem.propTypes = {
-  largeImageURL: PropTypes.string.isRequired,
-  tags: PropTypes.string.isRequired,
-  webformatURL: PropTypes.string.isRequired,
+      <ModalImg
+        isOpen={selectedImg !== null}
+        onClose={closeModal}
+        largeImageURL={largeImageURL}
+        tags={tags}
+      />
+    </ImageGalleryItemList>
+  );
 };
+
+// ImageGalleryItem.propTypes = {
+//   largeImageURL: PropTypes.string.isRequired,
+//   tags: PropTypes.string.isRequired,
+//   webformatURL: PropTypes.string.isRequired,
+// };

@@ -1,5 +1,3 @@
-import { Component } from 'react';
-import PropTypes from 'prop-types';
 import {
   Header,
   SearchForm,
@@ -7,50 +5,41 @@ import {
   SearchFormButtonLabel,
   SearchFormInput,
 } from './Searchbar.styled';
+import { useState } from 'react';
 
-export class Searchbar extends Component {
-  state = {
-    query: '',
+export const Searchbar = ({ onSubmit }) => {
+  const [query, setQuery] = useState('');
+
+  const handelChange = e => {
+    setQuery(e.currentTarget.value.toLowerCase());
   };
 
-  handelChange = e => {
-    this.setState({ query: e.currentTarget.value.toLowerCase() });
-  };
-
-  handelSubmit = e => {
-    const { query } = this.state;
+  const handelSubmit = e => {
     e.preventDefault();
     if (query.trim() === '') {
       return alert('Нельзя сделать запрос по пустому query');
     }
 
-    this.props.onSubmit(this.state);
-    this.setState({ query: '' });
+    onSubmit(query);
+    setQuery('');
   };
-  render() {
-    const { query } = this.state;
 
-    return (
-      <Header>
-        <SearchForm onSubmit={this.handelSubmit}>
-          <SearchFormButton type="submit">
-            <SearchFormButtonLabel>Search</SearchFormButtonLabel>
-          </SearchFormButton>
+  return (
+    <Header>
+      <SearchForm onSubmit={handelSubmit}>
+        <SearchFormButton type="submit">
+          <SearchFormButtonLabel>Search</SearchFormButtonLabel>
+        </SearchFormButton>
 
-          <SearchFormInput
-            value={query}
-            onChange={this.handelChange}
-            type="text"
-            autoComplete="off"
-            autoFocus
-            placeholder="Search images and photos"
-          />
-        </SearchForm>
-      </Header>
-    );
-  }
-}
-
-Searchbar.protoTypes = {
-  onSubmit: PropTypes.func.isRequired,
+        <SearchFormInput
+          value={query}
+          onChange={handelChange}
+          type="text"
+          autoComplete="off"
+          autoFocus
+          placeholder="Search images and photos"
+        />
+      </SearchForm>
+    </Header>
+  );
 };

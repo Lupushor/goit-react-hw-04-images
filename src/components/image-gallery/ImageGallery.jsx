@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 export const ImageGallery = ({ images }) => {
   return (
-    <ImageList class="gallery">
+    <ImageList>
       {images.map(({ id, largeImageURL, tags, webformatURL }) => (
         <ImageGalleryItem
           key={id}
