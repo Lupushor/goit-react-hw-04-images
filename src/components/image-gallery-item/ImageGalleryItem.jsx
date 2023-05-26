@@ -1,6 +1,6 @@
 import { ModalImg } from 'components/modal/Modal';
 import { useState } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import {
   ImageGalleryItemImage,
   ImageGalleryItemList,
@@ -34,8 +34,8 @@ export const ImageGalleryItem = ({ largeImageURL, tags, webformatURL }) => {
   );
 };
 
-// ImageGalleryItem.propTypes = {
-//   largeImageURL: PropTypes.string.isRequired,
-//   tags: PropTypes.string.isRequired,
-//   webformatURL: PropTypes.string.isRequired,
-// };
+ImageGalleryItem.propTypes = {
+  largeImageURL: PropTypes.string.isRequired,
+  tags: PropTypes.string.isRequired,
+  webformatURL: PropTypes.string.isRequired,
+};

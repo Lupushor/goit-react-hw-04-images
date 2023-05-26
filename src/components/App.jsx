@@ -31,7 +31,9 @@ export const App = () => {
   };
 
   useEffect(() => {
-    fetchImages(query, page);
+    if (query) {
+      fetchImages(query, page);
+    }
   }, [query, page]);
 
   const handelSubmit = query => {
